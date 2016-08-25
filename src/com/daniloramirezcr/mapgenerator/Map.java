@@ -118,10 +118,11 @@ public class Map {
     public void fillMap(){
         this.totalElements = this.getHeight() * this.getWidth(); //We get the total elements we are going to write in the map
         this.mes("Filling map of a total of " + Integer.toString(this.totalElements) + " elements");
-        for(int i=0; i<30; i++){
+        for(int i=0; i<this.totalElements; i++){
             this.setRandomSeed(); //TODO change this to execute until full
         }
 
+        this.mes("Ending process");
     }
 
     /**
@@ -158,9 +159,11 @@ public class Map {
             if(this.mapContent[random_number_w][random_number_h] == null){
                 try{
                     this.mapContent[random_number_w][random_number_h] = (MapElement) randomElement.clone();
+                    added = true;
+                    this.total_added++;
+                    this.mes("Element added");
                 }catch(CloneNotSupportedException c){}
-                added = true;
-                this.total_added++;
+
             }else{
                 this.mes("Space occupped. Retrying");
             }

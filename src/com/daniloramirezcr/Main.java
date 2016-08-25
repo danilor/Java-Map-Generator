@@ -10,8 +10,8 @@ import com.daniloramirezcr.mapgenerator.*;
 * */
 public class Main {
 
-    private int width = 20;
-    private int height = 20;
+    private int width = 100;
+    private int height = 100;
     public static void main(String[] args) {
         Main m = new Main();
         m.execute();
