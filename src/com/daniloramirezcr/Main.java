@@ -19,16 +19,25 @@ public class Main {
 
     public void execute(){
         // Creating the new map object from the class
+        Console.print("|=====================================|");
+        Console.print("| Welcome to the Random Map Generator |");
+        Console.print("|=====================================|");
         Map map = new Map();
+        Console.print("You are executing the version of the map generator: " + map.getVersion().toString() );
+        map.enableMessages();
+        map.setUpPossibleElements();
         //Setting up the width and height. Even when the map has default values, its important to have them here.
         map.setWidth(this.width);
         map.setHeight(this.height);
         //Printing the welcome message
-        Console.print("Welcome to the Random Map Generator");
-        Console.print("You are executing the version of the map generator: " + map.getVersion().toString() );
+
+
         Console.printSpace();
         Console.print("Generating the map");
         map.generateMatrix();
+        map.fillMap();
+
+        map.calculateTime(); // This is the very last function to be called
 
     }
 }
