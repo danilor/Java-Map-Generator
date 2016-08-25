@@ -17,6 +17,7 @@ public class Map {
     private MapElement[][] mapContent;
     private MapElement[] possibleElements;
     private boolean sendMessagesToConsole = false;
+    private int total_added = 0; //Counter for the total elements added
     // The following variables is to calculate the time between two dates.
     private Date start;
     private Date end;
@@ -117,8 +118,10 @@ public class Map {
     public void fillMap(){
         this.totalElements = this.getHeight() * this.getWidth(); //We get the total elements we are going to write in the map
         this.mes("Filling map of a total of " + Integer.toString(this.totalElements) + " elements");
+        for(int i=0; i<30; i++){
+            this.setRandomSeed(); //TODO change this to execute until full
+        }
 
-        this.setRandomSeed(); //TODO change this to execute until full
     }
 
     /**
@@ -142,19 +145,28 @@ public class Map {
     private void setRandomSeed(){
         this.mes("Setting up the random seed in the map");
         MapElement randomElement = this.getRandomElement();
-        Random rand = new Random();
-        int random_number_w = rand.nextInt(this.width);
-        int random_number_h = rand.nextInt(this.height);
-        this.mes("We are going to try to write the random element to w=" + Integer.toString(random_number_w) + " and h=" + Integer.toString(random_number_h));
+
+
 
         boolean added = false;
         while(added == false){
+            Random rand = new Random();
+            int random_number_w = rand.nextInt(this.width);
+            int random_number_h = rand.nextInt(this.height);
             //We are clonning the element, but somehow the clone method is returning an object method only.
-            try{
-                this.mapContent[random_number_w][random_number_h] = (MapElement) randomElement.clone();
-            }catch(CloneNotSupportedException c){}
+            this.mes("We are going to try to write the random element to w=" + Integer.toString(random_number_w) + " and h=" + Integer.toString(random_number_h));
+            if(this.mapContent[random_number_w][random_number_h] == null){
+                try{
+                    this.mapContent[random_number_w][random_number_h] = (MapElement) randomElement.clone();
+                }catch(CloneNotSupportedException c){}
+                added = true;
+                this.total_added++;
+            }else{
+                this.mes("Space occupped. Retrying");
+            }
 
-            added = true;
+
+
         }
     }
 
