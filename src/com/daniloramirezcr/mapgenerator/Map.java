@@ -10,12 +10,13 @@ public class Map {
     private int height = 20;
     private String version = "0.2";
     private MapElement[][] mapContent;
+    private MapElement[] possibleElements;
 
     /**
     * Map Constructor.
     */
     public void Map(){
-
+        this.setUpPossibleElements();
     }
 
     /**
@@ -28,6 +29,14 @@ public class Map {
     public void Map(int w, int h){
         this.width = w;
         this.height = h;
+        this.setUpPossibleElements();
+    }
+    /**
+     * This function set up the possible elements for this map
+     */
+
+    public void setUpPossibleElements(){
+        this.possibleElements = MapElement.getPossibleElements();
     }
 
     /**
@@ -66,6 +75,14 @@ public class Map {
      */
     public void generateMatrix(){
         this.mapContent = new MapElement[this.width][this.height];
+    }
+
+    /**
+     * This function will fill the map with the information.
+     */
+    public void fillMap(){
+
+
     }
 
 

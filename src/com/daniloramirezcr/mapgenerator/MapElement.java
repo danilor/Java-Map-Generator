@@ -35,4 +35,26 @@ public class MapElement {
      * @return String The type of the map
      */
     public String getBackgroundColor(){  return this.backgroundColor;  }
+
+    /**
+     * This function will return the possible elements to use.
+     *
+     * @return MapElement[] List of elements
+     */
+    public static MapElement[] getPossibleElements(){
+        MapElement[] possibleElements = {};
+        possibleElements[0] = new MapElement();
+        possibleElements[0].setType("forest");
+        possibleElements[0].setBackgroundColor("green");
+        possibleElements[1] = new MapElement();
+        possibleElements[1].setType("dessert");
+        possibleElements[1].setBackgroundColor("yellow");
+        possibleElements[2] = new MapElement();
+        possibleElements[2].setType("water");
+        possibleElements[2].setBackgroundColor("lightblue");
+        possibleElements[3] = new MapElement();
+        possibleElements[3].setType("sabana");
+        possibleElements[3].setBackgroundColor("lightgreen");
+        return possibleElements;
+    }
 }
