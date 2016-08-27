@@ -190,9 +190,9 @@ public class Map {
 
         if( this.addedElements[ randomElement.location_type ] != null  && this.addedElements[ randomElement.location_type ].size() > 0 ){
             boolean added = false;
-           /* try{
+            try{
                 added = this.extendSeed( (MapElement) randomElement.clone() );
-            }catch(CloneNotSupportedException c){}*/
+            }catch(CloneNotSupportedException c){}
             if( !added ){
                 try{
                     this.generateNewRandomSeed( (MapElement) randomElement.clone() );
@@ -232,7 +232,7 @@ public class Map {
                     case 0:
                         this.mes("Position TOP");
                         if(  aux.top == null && aux.getLocationW() > 0 && this.mapContent[ aux.getLocationW()-1 ][ aux.getLocationH() ] == null ) {
-                            this.setMapElementAtPosition( aux.getLocationH(), aux.getLocationW() -1, randomElement );
+                            this.setMapElementAtPosition( aux.getLocationW() -1,aux.getLocationH(), randomElement );
                             added = true;
                             i = 4;
                         }
@@ -241,7 +241,7 @@ public class Map {
                     case 1:
                         this.mes("Position RIGHT");
                         if(  aux.right == null && aux.getLocationH() < getHeight()-1 && this.mapContent[ aux.getLocationW() ][ aux.getLocationH() + 1 ] == null ) {
-                            this.setMapElementAtPosition( aux.getLocationH() + 1 , aux.getLocationW() , randomElement );
+                            this.setMapElementAtPosition( aux.getLocationW() , aux.getLocationH() + 1 , randomElement );
                             added = true;
                             i = 4;
                         }
@@ -249,17 +249,15 @@ public class Map {
                     case 2:
                         this.mes("Position BOTTOM");
                         if(  aux.bottom == null && aux.getLocationW() < this.getWidth()-1 && this.mapContent[ aux.getLocationW() +1 ][ aux.getLocationH()  ] == null ) {
-                            this.setMapElementAtPosition( aux.getLocationH(), aux.getLocationW() +1, randomElement );
+                            this.setMapElementAtPosition(aux.getLocationW() + 1, aux.getLocationH(), randomElement);
                             added = true;
                             i = 4;
                         }
-                        added = true;
-                        i = 4;
                         break;
                     case 3:
                         this.mes("Position LEFT");
                         if(  aux.left == null && aux.getLocationH() > 0 && this.mapContent[ aux.getLocationW() ][ aux.getLocationH()  -1 ] == null ) {
-                            this.setMapElementAtPosition( aux.getLocationH() -1, aux.getLocationW(), randomElement );
+                            this.setMapElementAtPosition( aux.getLocationW(), aux.getLocationH() -1 , randomElement );
                             added = true;
                             i = 4;
                         }
