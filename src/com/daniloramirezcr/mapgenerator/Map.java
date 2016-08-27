@@ -1,5 +1,8 @@
 package com.daniloramirezcr.mapgenerator;
 
+import com.daniloramirezcr.RandomString;
+
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat; //Only for the simple date format
 import java.util.*;
 // The following two imports are for the array list functionality
@@ -13,6 +16,7 @@ public class Map {
 
     private int width = 20;
     private int height = 20;
+    private int tolerance = 4; // This indicates what is the minimum amount of elements that can be next to them. If its less, they should be deleted.
     private int totalElements = 0;
     private String version = "0.4";
     private MapElement[][] mapContent;
@@ -100,6 +104,22 @@ public class Map {
     public int getHeight(){  return this.height;  }
 
     /**
+     * Set the tolerance level
+     * @param t The tolerance level
+     */
+    public void setTolerance(int t){
+        this.tolerance = t;
+    }
+
+    /**
+     * Get the tolerance level
+     * @return int The tolerance level
+     */
+    public int getTolerance(){
+        return this.tolerance;
+    }
+
+    /**
      * This function will set up the messages functionality of this class
      */
     public void setMessagesBool(boolean b){
@@ -159,22 +179,41 @@ public class Map {
 
     /**
      * This function will print the map in console mode. It cannot use the same function as message because we dont want to to print time or all in the same line.
+     * @param toFile Its the boolean that indicates if we want to export this as file.
      */
-    public void printConsoleMap(){
+    public void printConsoleMap(boolean toFile){
         this.mes("Printing the map. Please wait.");
+        String file = "";
         System.out.println("");//Print an empty space, just for order
         for(int h = 0 ; h < this.getHeight() ; h++){
             for(int w=0 ; w < this.getWidth() ; w++){
                 if( this.mapContent[w][h] == null ){
                     System.out.print( " " + " " );
+                    file += "  ";
                 }else{
                     System.out.print( this.mapContent[w][h].getFirstLetterOfType() + " " );
+                    file += this.mapContent[w][h].getFirstLetterOfType() + " ";
                 }
             }
+            file += "\n";
             System.out.println();
         }
         System.out.println("");//Print an empty space, just for order
 
+        if(toFile){
+            this.mes("Printing the map to a file");
+            RandomString rs = new RandomString(16);
+            String random_name = rs.nextString();
+            this.mes("Random name: " + random_name);
+            try{
+                PrintWriter writer = new PrintWriter(random_name + ".map", "UTF-8");
+                writer.println(file);
+                writer.close();
+            }catch (Exception e){
+                this.mes("File couldnt be printed");
+            }
+
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
