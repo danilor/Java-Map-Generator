@@ -10,8 +10,8 @@ import com.daniloramirezcr.mapgenerator.*;
 * */
 public class Main {
 
-    private int width = 100;
-    private int height = 100;
+    private int width = 20;
+    private int height = 20;
     public static void main(String[] args) {
         Main m = new Main();
         m.execute();
@@ -24,6 +24,7 @@ public class Main {
         Console.print("|=====================================|");
         Map map = new Map();
         Console.print("You are executing the version of the map generator: " + map.getVersion().toString() );
+        map.startCalculation();
         map.enableMessages();
         map.setUpPossibleElements();
         //Setting up the width and height. Even when the map has default values, its important to have them here.
@@ -36,6 +37,8 @@ public class Main {
         Console.print("Generating the map");
         map.generateMatrix();
         map.fillMap();
+
+        map.printConsoleMap(); // This will print the map in console mode
 
         map.calculateTime(); // This is the very last function to be called
 
