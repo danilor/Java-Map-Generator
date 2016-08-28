@@ -22,6 +22,8 @@ public class Map {
     private MapElement[][] mapContent;
     private MapElement[] possibleElements;
     private boolean sendMessagesToConsole = false;
+    private boolean graphic = false; // This variable indicates if we want to use the graphic interface
+    private MapGraphic MGraphic = null;
 
     private List<MapElement>[] addedElements; // The list of those elements already added to the map (just for orden)
 
@@ -149,15 +151,21 @@ public class Map {
     }
 
     /**
+     * This function will enable the graphic interface for this map.
+     */
+    public void enableGraphic(){
+        this.graphic = true;
+        this.MGraphic = new MapGraphic();
+        this.mes("Graphic Map enabled");
+    }
+
+    /**
      * This function will fill the map with the information.
      */
     public void fillMap(){
-        this.totalElements = this.getHeight() * this.getWidth(); //We get the total elements we are going to write in the map
-        this.mes("Filling map of a total of " + Integer.toString(this.totalElements) + " elements");
-        while( !this.mapIsFull() ){
-            this.setRandomSeed(); //TODO change this to execute until full
-        }
-        this.mes("Ending process");
+        this.fillMapBasic();
+
+        this.cleanMap();
     }
 
     /**
@@ -225,23 +233,53 @@ public class Map {
      */
     private void setRandomSeed(){
         this.mes("Setting up the random seed in the map");
+        //Before actually adding the seed, we have to check if we execed the porcent of this element we want in the map
         MapElement randomElement = this.getRandomElement();
+        int porcentElement = randomElement.getPorcent();
+        int addedElement = 1;
+        if(this.addedElements[ randomElement.location_type ] != null){
+            addedElement = this.addedElements[ randomElement.location_type ].size();
+        }
+        float addedPorcent = randomElement.getPorcent() * this.totalElements / 100;
+        this.mes("This element has a maximun amount of " + Integer.toString(porcentElement) + " porcent. And it has already added: " + Integer.toString(addedElement) + " elements" );
 
-        if( this.addedElements[ randomElement.location_type ] != null  && this.addedElements[ randomElement.location_type ].size() > 0 ){
-            boolean added = false;
-            try{
-                added = this.extendSeed( (MapElement) randomElement.clone() );
-            }catch(CloneNotSupportedException c){}
-            if( !added ){
+        if((float)addedElement <= (float)addedPorcent){
+            if( this.addedElements[ randomElement.location_type ] != null  && this.addedElements[ randomElement.location_type ].size() > 0 ){
+                boolean added = false;
+                try{
+                    added = this.extendSeed( (MapElement) randomElement.clone() );
+                }catch(CloneNotSupportedException c){}
+                if( !added ){
+                    try{
+                        this.generateNewRandomSeed( (MapElement) randomElement.clone() );
+                    }catch(CloneNotSupportedException c){}
+                }
+            }else{
                 try{
                     this.generateNewRandomSeed( (MapElement) randomElement.clone() );
                 }catch(CloneNotSupportedException c){}
             }
-        }else{
-            try{
-                this.generateNewRandomSeed( (MapElement) randomElement.clone() );
-            }catch(CloneNotSupportedException c){}
         }
+
+    }
+
+    /**
+     * This function will fill the map in the basic way until full
+     */
+    private void fillMapBasic(){
+        this.totalElements = this.getHeight() * this.getWidth(); //We get the total elements we are going to write in the map
+        this.mes("Filling map of a total of " + Integer.toString(this.totalElements) + " elements");
+        while( !this.mapIsFull() ){
+            this.setRandomSeed(); //TODO change this to execute until full
+        }
+        this.mes("Ending fill process");
+    }
+
+    /**
+     * This function will clean the map in different ways
+     */
+    private void cleanMap(){
+        this.mes("Starting cleaning process");
     }
 
     /**
@@ -257,11 +295,8 @@ public class Map {
         MapElement aux = this.addedElements[ randomElement.location_type ].get(random_number);
         //This is the location. 0 for top, 1 for right, 2 for bottom, 3 for left
         List<Integer> solution = new ArrayList<>();
-        for ( int i = 0 ; i < 4 ; i++ ){
-            solution.add(i);
-        }
+        for ( int i = 0 ; i < 4 ; i++ ){ solution.add(i); } // We fill the array with the numbers
         Collections.shuffle(solution);
-
         boolean added = false; //This will help us to identify when it has been added.
         for( int i = 0 ; i < 4 ; i ++ ){ //Lets try to locate an space to add the new element
             this.mes("Trying location at number: " + Integer.toString(i));
@@ -300,7 +335,6 @@ public class Map {
                             added = true;
                             i = 4;
                         }
-
                         break;
                 }
             }catch (Exception e){
@@ -319,7 +353,6 @@ public class Map {
      */
     private void generateNewRandomSeed(MapElement randomElement){
         this.mes("Searching for place to generate a random seed");
-
         boolean added = false;
         while(added == false){
             Random rand = new Random();
@@ -334,9 +367,7 @@ public class Map {
                 this.mes("Space occupped. Retrying");
             }
         }
-
     }
-
 
     /**
      * This function will set a map seed at a position on the map
@@ -349,7 +380,6 @@ public class Map {
         this.mes("Element added at: W = " + Integer.toString(w) + " H = " + Integer.toString(h) );
         this.mapContent[w][h] = element;
         element.setLocation( h , w );
-
         if(this.addedElements[ element.location_type ] == null){
             this.addedElements[ element.location_type ] = new ArrayList<MapElement>();
         }
@@ -370,7 +400,6 @@ public class Map {
         this.mes("The Map element is from type: " + this.possibleElements[random_number].getType());
         MapElement aux = this.possibleElements[ random_number ];
         aux.location_type = random_number;
-
         return aux;
     }
 
@@ -387,8 +416,5 @@ public class Map {
             System.out.println("MAP ["+ strDate + "]: " + t);
         }
     }
-
-
-
 
 }

@@ -119,11 +119,11 @@ public class MapElement implements Cloneable{
         possibleElements[2] = new MapElement();
         possibleElements[2].setType("Water");
         possibleElements[2].setBackgroundColor("lightblue");
-        possibleElements[0].setPorcent(40);
+        possibleElements[2].setPorcent(40);
         possibleElements[3] = new MapElement();
         possibleElements[3].setType("Sabana");
         possibleElements[3].setBackgroundColor("lightgreen");
-        possibleElements[0].setPorcent(20);
+        possibleElements[3].setPorcent(20);
         return possibleElements;
     }
 

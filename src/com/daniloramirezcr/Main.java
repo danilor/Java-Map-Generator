@@ -10,10 +10,10 @@ import com.daniloramirezcr.mapgenerator.*;
 * */
 public class Main {
 
-    private int width = 40; //This is the example width
-    private int height = 30; //This is the example height
+    private int width = 20; //This is the example width
+    private int height = 20; //This is the example height
     private int tolerance = 5; //This is the example tolerance
-    private boolean printToFile = false; // This indicates if we want to print the map into a file
+    private boolean printToFile = true; // This indicates if we want to print the map into a file
     public static void main(String[] args) {
         Main m = new Main();
         m.execute();
@@ -29,6 +29,7 @@ public class Main {
         Console.print("You are executing the version of the map generator: " + map.getVersion().toString() );
         map.startCalculation();
         map.enableMessages();
+        map.enableGraphic();
         map.setUpPossibleElements();
         //Setting up the width and height. Even when the map has default values, its important to have them here.
         map.setWidth(this.width);
