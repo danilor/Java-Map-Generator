@@ -13,7 +13,7 @@ public class Main {
     private int width = 20; //This is the example width
     private int height = 20; //This is the example height
     private int tolerance = 5; //This is the example tolerance
-    private boolean printToFile = true; // This indicates if we want to print the map into a file
+    private boolean printToFile = false; // This indicates if we want to print the map into a file
     public static void main(String[] args) {
         Main m = new Main();
         m.execute();

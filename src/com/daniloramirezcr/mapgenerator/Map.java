@@ -164,8 +164,8 @@ public class Map {
      */
     public void fillMap(){
         this.fillMapBasic();
+        for (int i = 0 ; i < this.tolerance ; i++ ) this.cleanMap(); // I am executing this sentence the amount of times of the tolerance.
 
-        this.cleanMap();
     }
 
     /**
@@ -242,7 +242,6 @@ public class Map {
         }
         float addedPorcent = randomElement.getPorcent() * this.totalElements / 100;
         this.mes("This element has a maximun amount of " + Integer.toString(porcentElement) + " porcent. And it has already added: " + Integer.toString(addedElement) + " elements" );
-
         if((float)addedElement <= (float)addedPorcent){
             if( this.addedElements[ randomElement.location_type ] != null  && this.addedElements[ randomElement.location_type ].size() > 0 ){
                 boolean added = false;
@@ -278,8 +277,100 @@ public class Map {
     /**
      * This function will clean the map in different ways
      */
-    private void cleanMap(){
+    private void cleanMap(){ // TODO improve the cleaning process.
         this.mes("Starting cleaning process");
+
+        for(int h = 0 ; h < this.getHeight() ; h++){
+            for(int w=0 ; w < this.getWidth() ; w++){
+                if( this.mapContent[w][h] != null ){
+                    int expected = 1; // This can be change later
+                    int found = 0;
+                    MapElement aux = this.mapContent[w][h];
+                    //this.mes("Position TOP");
+                    if(  aux.getLocationW() > 0 && this.mapContent[ aux.getLocationW()-1 ][ aux.getLocationH() ] != null && this.mapContent[ aux.getLocationW()-1 ][ aux.getLocationH() ].getType() == aux.getType() ) {
+                        found++;
+                    }
+                    //this.mes("Position RIGHT");
+                    if(  aux.getLocationH() < getHeight()-1 && this.mapContent[ aux.getLocationW() ][ aux.getLocationH() + 1 ] != null && this.mapContent[ aux.getLocationW() ][ aux.getLocationH() + 1 ].getType() == aux.getType() ) {
+                        found++;
+                    }
+                    //this.mes("Position BOTTOM");
+                    if(  aux.getLocationW() < this.getWidth()-1 && this.mapContent[ aux.getLocationW() +1 ][ aux.getLocationH()  ] != null && this.mapContent[ aux.getLocationW() +1 ][ aux.getLocationH()  ].getType() == aux.getType() ) {
+                        found++;
+                    }
+                    //this.mes("Position LEFT");
+                    if(  aux.getLocationH() > 0 && this.mapContent[ aux.getLocationW() ][ aux.getLocationH()  -1 ] != null && this.mapContent[ aux.getLocationW() ][ aux.getLocationH()  -1 ].getType() == aux.getType()) {
+                        found++;
+                    }
+
+                    if(found < expected){ //We have to clean this space and turn it into a random element from around
+                        this.matchElementWithEnvironment( aux );
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     * This function will turn a MapElement as one of its surrounding ones.
+     * @param aux The MapElement to change
+     */
+    private void matchElementWithEnvironment( MapElement aux){
+        List<Integer> solution = new ArrayList<>();
+        for ( int i = 0 ; i < 4 ; i++ ){ solution.add(i); } // We fill the array with the numbers
+        Collections.shuffle(solution);
+        boolean added = false; //This will help us to identify when it has been added.
+        while(added == false) {
+            Collections.shuffle(solution);
+            int aux_location = solution.get(0);
+            try {
+                switch (aux_location) {
+                    case 0:
+                        //this.mes("Position TOP");
+                        if (aux.getLocationW() > 0 && this.mapContent[aux.getLocationW() - 1][aux.getLocationH()] != null) {
+                            int h = this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].getLocationH();
+                            int w = this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].getLocationW();
+                            aux = (MapElement) this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].clone();
+                            aux.setLocation(h,w);
+                            added = true;
+                        }
+                        break;
+                    case 1:
+                        //this.mes("Position RIGHT");
+                        if (aux.getLocationH() < getHeight() - 1 && this.mapContent[aux.getLocationW()][aux.getLocationH() + 1] != null) {
+                            int h = this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].getLocationH();
+                            int w = this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].getLocationW();
+                            aux = (MapElement) this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].clone();
+                            aux.setLocation(h,w);
+                            added = true;
+                        }
+                        break;
+                    case 2:
+                        //this.mes("Position BOTTOM");
+                        if (aux.getLocationW() < this.getWidth() - 1 && this.mapContent[aux.getLocationW() + 1][aux.getLocationH()] != null) {
+                            int h = this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].getLocationH();
+                            int w = this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].getLocationW();
+                            aux = (MapElement) this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].clone();
+                            aux.setLocation(h,w);
+                            added = true;
+                        }
+                        break;
+                    case 3:
+                        //this.mes("Position LEFT");
+                        if (aux.getLocationH() > 0 && this.mapContent[aux.getLocationW()][aux.getLocationH() - 1] != null) {
+                            int h = this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].getLocationH();
+                            int w = this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].getLocationW();
+                            aux = (MapElement) this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].clone();
+                            aux.setLocation(h,w);
+                            added = true;
+                        }
+                        break;
+                }
+            } catch (Exception e) {
+                this.mes("Exception Converting seed");
+            }
+        }
     }
 
     /**
@@ -340,8 +431,6 @@ public class Map {
             }catch (Exception e){
                 this.mes("Exception extending seed");
             }
-
-
         }
 
         return added; //We return true if it was added or false if not.
