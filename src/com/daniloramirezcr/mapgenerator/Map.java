@@ -10,7 +10,7 @@ import java.util.*;
 /*
 *   This is the main MAP class and object.
 *   @author  Danilo Ramírez
-*   @version  0.4
+*   @version  1
 * */
 public class Map {
 
@@ -18,7 +18,8 @@ public class Map {
     private int height = 20;
     private int tolerance = 4; // This indicates what is the minimum amount of elements that can be next to them. If its less, they should be deleted.
     private int totalElements = 0;
-    private String version = "0.4";
+    private int expected_tolerance_cleaning = 2;
+    private String version = "  1";
     private MapElement[][] mapContent;
     private MapElement[] possibleElements;
     private boolean sendMessagesToConsole = false;
@@ -279,7 +280,6 @@ public class Map {
      */
     private void cleanMap(){ // TODO improve the cleaning process.
         this.mes("Starting cleaning process");
-
         for(int h = 0 ; h < this.getHeight() ; h++){
             for(int w=0 ; w < this.getWidth() ; w++){
                 if( this.mapContent[w][h] != null ){
@@ -303,7 +303,7 @@ public class Map {
                         found++;
                     }
 
-                    if(found < expected){ //We have to clean this space and turn it into a random element from around
+                    if(found < this.expected_tolerance_cleaning){ //We have to clean this space and turn it into a random element from around
                         this.matchElementWithEnvironment( aux );
                     }
 
@@ -331,9 +331,10 @@ public class Map {
                         if (aux.getLocationW() > 0 && this.mapContent[aux.getLocationW() - 1][aux.getLocationH()] != null) {
                             int h = this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].getLocationH();
                             int w = this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].getLocationW();
-                            aux = (MapElement) this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].clone();
-                            aux.setLocation(h,w);
+                            MapElement newElement = (MapElement) this.mapContent[aux.getLocationW() - 1][aux.getLocationH()].clone();
+                            newElement.setLocation(aux.getLocationH(),aux.getLocationW());
                             added = true;
+                            this.mapContent[aux.getLocationW()][aux.getLocationH()] = newElement;
                         }
                         break;
                     case 1:
@@ -341,9 +342,10 @@ public class Map {
                         if (aux.getLocationH() < getHeight() - 1 && this.mapContent[aux.getLocationW()][aux.getLocationH() + 1] != null) {
                             int h = this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].getLocationH();
                             int w = this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].getLocationW();
-                            aux = (MapElement) this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].clone();
-                            aux.setLocation(h,w);
+                            MapElement newElement = (MapElement)  this.mapContent[aux.getLocationW()][aux.getLocationH() + 1].clone();
+                            newElement.setLocation(aux.getLocationH(),aux.getLocationW());
                             added = true;
+                            this.mapContent[aux.getLocationW()][aux.getLocationH()] = newElement;
                         }
                         break;
                     case 2:
@@ -351,9 +353,10 @@ public class Map {
                         if (aux.getLocationW() < this.getWidth() - 1 && this.mapContent[aux.getLocationW() + 1][aux.getLocationH()] != null) {
                             int h = this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].getLocationH();
                             int w = this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].getLocationW();
-                            aux = (MapElement) this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].clone();
-                            aux.setLocation(h,w);
+                            MapElement newElement = (MapElement)  this.mapContent[aux.getLocationW() + 1][aux.getLocationH()].clone();
+                            newElement.setLocation(aux.getLocationH(),aux.getLocationW());
                             added = true;
+                            this.mapContent[aux.getLocationW()][aux.getLocationH()] = newElement;
                         }
                         break;
                     case 3:
@@ -361,9 +364,10 @@ public class Map {
                         if (aux.getLocationH() > 0 && this.mapContent[aux.getLocationW()][aux.getLocationH() - 1] != null) {
                             int h = this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].getLocationH();
                             int w = this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].getLocationW();
-                            aux = (MapElement) this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].clone();
-                            aux.setLocation(h,w);
+                            MapElement newElement = (MapElement)  this.mapContent[aux.getLocationW()][aux.getLocationH() - 1].clone();
+                            newElement.setLocation(aux.getLocationH(),aux.getLocationW());
                             added = true;
+                            this.mapContent[aux.getLocationW()][aux.getLocationH()] = newElement;
                         }
                         break;
                 }
