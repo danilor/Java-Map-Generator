@@ -193,18 +193,22 @@ public class Map {
     public void printConsoleMap(boolean toFile){
         this.mes("Printing the map. Please wait.");
         String file = "";
+        String csv = ""; // This is a new feature that will export to CSV file
         System.out.println("");//Print an empty space, just for order
         for(int h = 0 ; h < this.getHeight() ; h++){
             for(int w=0 ; w < this.getWidth() ; w++){
                 if( this.mapContent[w][h] == null ){
                     System.out.print( " " + " " );
                     file += "  ";
+                    csv += " ,";
                 }else{
                     System.out.print( this.mapContent[w][h].getFirstLetterOfType() + " " );
                     file += this.mapContent[w][h].getFirstLetterOfType() + " ";
+                    csv += this.mapContent[w][h].getFirstLetterOfType() + ",";
                 }
             }
             file += "\n";
+            csv += "\n";
             System.out.println();
         }
         System.out.println("");//Print an empty space, just for order
@@ -219,7 +223,14 @@ public class Map {
                 writer.println(file);
                 writer.close();
             }catch (Exception e){
-                this.mes("File couldnt be printed");
+                this.mes("File couldn't be printed");
+            }
+            try{
+                PrintWriter writer = new PrintWriter(random_name + ".csv", "UTF-8");
+                writer.println(csv);
+                writer.close();
+            }catch (Exception e){
+                this.mes("CSV File couldnt be printed");
             }
 
         }

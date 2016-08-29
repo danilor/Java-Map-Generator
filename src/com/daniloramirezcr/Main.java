@@ -9,8 +9,8 @@ import com.daniloramirezcr.mapgenerator.*;
 * Main class. Executing the application
 * */
 public class Main {
-    private int width = 70; //This is the example width
-    private int height = 70; //This is the example height
+    private int width = 20; //This is the example width
+    private int height = 20; //This is the example height
     private int tolerance = 5; //This is the example tolerance
     private boolean printToFile = false; // This indicates if we want to print the map into a file
     public static void main(String[] args) {

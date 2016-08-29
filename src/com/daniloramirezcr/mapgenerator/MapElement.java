@@ -107,11 +107,11 @@ public class MapElement implements Cloneable{
      * @return MapElement[] List of elements
      */
     public static MapElement[] getPossibleElements(){
-        MapElement[] possibleElements = new MapElement[4];
+        MapElement[] possibleElements = new MapElement[5];
         possibleElements[0] = new MapElement();
         possibleElements[0].setType("Forest");
         possibleElements[0].setBackgroundColor("green");
-        possibleElements[0].setPorcent(30);
+        possibleElements[0].setPorcent(40);
         possibleElements[1] = new MapElement();
         possibleElements[1].setType("Dessert");
         possibleElements[1].setBackgroundColor("yellow");
@@ -119,11 +119,15 @@ public class MapElement implements Cloneable{
         possibleElements[2] = new MapElement();
         possibleElements[2].setType("Water");
         possibleElements[2].setBackgroundColor("lightblue");
-        possibleElements[2].setPorcent(40);
+        possibleElements[2].setPorcent(10);
         possibleElements[3] = new MapElement();
         possibleElements[3].setType("Sabana");
         possibleElements[3].setBackgroundColor("lightgreen");
         possibleElements[3].setPorcent(20);
+        possibleElements[4] = new MapElement();
+        possibleElements[4].setType("Mountain");
+        possibleElements[4].setBackgroundColor("gray");
+        possibleElements[4].setPorcent(20);
         return possibleElements;
     }
 
