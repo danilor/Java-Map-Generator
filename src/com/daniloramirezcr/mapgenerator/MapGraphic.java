@@ -5,7 +5,6 @@ import java.awt.*;
 
 /**
  * Created by Danilo on 27/8/2016.
- * This class will support the MAP class and create MAP Graphic interface.
  * @author Danilo Ramírez and Arturo Pérez
  * @version 1.0
  */
@@ -14,14 +13,8 @@ public class MapGraphic extends JFrame {
      * Constructor
      */
 
+
     private Map map;
-
-    /**
-     * The constructor of the class.
-     */
-    public void MapGraphic(){
-
-    }
 
     /**
      * This function sets the map content
@@ -33,7 +26,7 @@ public class MapGraphic extends JFrame {
         return this;
     }
 
-    /**
+     /**
      * Function that shows the map to a Window
      */
     public void showScreenMap(){
@@ -49,10 +42,10 @@ public class MapGraphic extends JFrame {
                 }
             }
         }
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
+        this.setTitle("Random Map Generator");
 
     }
 
