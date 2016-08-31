@@ -5,9 +5,13 @@ package com.daniloramirezcr.mapgenerator;
 *   @author  Danilo Ramírez
 *   @version  0.2
 * */
+
+import java.awt.*;
+
 public class MapElement implements Cloneable{
     private String type = "empty";
     private String backgroundColor = "white";
+    private Color backColor = null;
     private int porcent = 100;
     // The following two variables are optional and the idea is to store the location of the element
     private int location_w;
@@ -51,9 +55,9 @@ public class MapElement implements Cloneable{
     /**
      *  Set the type
      * @param  t The type of the element
-     * @return Nothing
+     * @return MapElement
      */
-    public void setType(String t){    this.type = t; }
+    public MapElement setType(String t){    this.type = t; return this; }
     /**
      *  Get the type
      * @return String The type of the map
@@ -63,15 +67,32 @@ public class MapElement implements Cloneable{
     /**
      *  Set the background color
      * @param  c The background color of the element
-     * @return Nothing
+     * @return MapElement this
      */
-    public void setBackgroundColor(String c){    this.backgroundColor = c; }
+    public MapElement setBackgroundColor(String c){    this.backgroundColor = c; return this; }
     /**
      *  Get the background color
      * @return String The type of the map
      */
     public String getBackgroundColor(){  return this.backgroundColor;  }
 
+    /**
+     * This function sets the back color of the element
+     * @param c The Color from java.awt.Color
+     * @return MapElement this
+     */
+    public MapElement setBackColor(Color c){
+        this.backColor = c;
+        return this;
+    }
+
+    /**
+     * This function returns the MapElement color
+     * @return Color Returns the backColor of java.awt.Color
+     */
+    public Color getBackColor(){
+       return this.backColor;
+    }
 
     /**
      * This will get the porcent posibilities
@@ -84,9 +105,10 @@ public class MapElement implements Cloneable{
     /**
      * This will set the porcent
      * @param p porcent
+     * @return MapElement this
      */
-    public void setPorcent(int p){
-        this.porcent = p;
+    public MapElement setPorcent(int p){
+        this.porcent = p; return this;
     }
 
     public Object clone() throws CloneNotSupportedException {
@@ -109,25 +131,15 @@ public class MapElement implements Cloneable{
     public static MapElement[] getPossibleElements(){
         MapElement[] possibleElements = new MapElement[5];
         possibleElements[0] = new MapElement();
-        possibleElements[0].setType("Forest");
-        possibleElements[0].setBackgroundColor("green");
-        possibleElements[0].setPorcent(40);
+        possibleElements[0].setType("Forest").setBackgroundColor("green").setPorcent(30).setBackColor( new Color(24,91,19) ); //Dark Green
         possibleElements[1] = new MapElement();
-        possibleElements[1].setType("Dessert");
-        possibleElements[1].setBackgroundColor("yellow");
-        possibleElements[1].setPorcent(10);
+        possibleElements[1].setType("Dessert").setBackgroundColor("yellow").setPorcent(10).setBackColor( Color.getHSBColor( 233 , 216 , 3) ); //Yellow (desert)
         possibleElements[2] = new MapElement();
-        possibleElements[2].setType("Water");
-        possibleElements[2].setBackgroundColor("lightblue");
-        possibleElements[2].setPorcent(10);
+        possibleElements[2].setType("Water").setBackgroundColor("lightblue").setPorcent(10).setBackColor( new Color(117,162,244) ); //Light blue
         possibleElements[3] = new MapElement();
-        possibleElements[3].setType("Sabana");
-        possibleElements[3].setBackgroundColor("lightgreen");
-        possibleElements[3].setPorcent(20);
+        possibleElements[3].setType("Sabana").setBackgroundColor("lightgreen").setPorcent(30).setBackColor( new Color(139,230,132) ); //Light gren
         possibleElements[4] = new MapElement();
-        possibleElements[4].setType("Mountain");
-        possibleElements[4].setBackgroundColor("gray");
-        possibleElements[4].setPorcent(20);
+        possibleElements[4].setType("Mountain").setBackgroundColor("gray").setPorcent(20).setBackColor( new Color(166,166,166) ); //Light gray
         return possibleElements;
     }
 

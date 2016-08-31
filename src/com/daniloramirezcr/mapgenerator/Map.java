@@ -23,7 +23,6 @@ public class Map {
     private MapElement[][] mapContent;
     private MapElement[] possibleElements;
     private boolean sendMessagesToConsole = false;
-    private boolean graphic = false; // This variable indicates if we want to use the graphic interface
     private MapGraphic MGraphic = null;
 
     private List<MapElement>[] addedElements; // The list of those elements already added to the map (just for orden)
@@ -132,9 +131,18 @@ public class Map {
     /**
      * This function will automatically set the messages to true
      */
-    public void enableMessages(){
+    public Map enableMessages(){
         this.setMessagesBool(true);
         this.mes("Class messages enabled. If you want to disable this feature please call the method setMessagesBool with a false parameter.");
+        return this;
+    }
+
+    /**
+     * This function will return the matrix with the map content
+     * @return MapElement[][] The matrix with all map points (MapElements)
+     */
+    public MapElement[][] getMapContent(){
+        return this.mapContent;
     }
 
     /**
@@ -149,15 +157,6 @@ public class Map {
     public void generateMatrix(){
         this.mes("Generating the matrix width w=" + Integer.toString(this.width) + " and h=" + Integer.toString(this.height));
         this.mapContent = new MapElement[this.width][this.height];
-    }
-
-    /**
-     * This function will enable the graphic interface for this map.
-     */
-    public void enableGraphic(){
-        this.graphic = true;
-        this.MGraphic = new MapGraphic();
-        this.mes("Graphic Map enabled");
     }
 
     /**
