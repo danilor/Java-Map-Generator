@@ -28,8 +28,8 @@ public class MapElement implements Cloneable{
 
     /**
      * This function will set the location of this element. This is optional
-     * @param h
-     * @param w
+     * @param h The height position of the element. Just for control purposes.
+     * @param w The width position of the element. Just for control purposes.
      */
     public void setLocation(int h, int w){
         this.location_h = h;

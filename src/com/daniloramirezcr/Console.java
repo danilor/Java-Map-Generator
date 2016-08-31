@@ -23,10 +23,19 @@ public class Console {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    /**
+     * It prints the text indicated
+     * @param t The text to be printed
+     * @return true indicating it was printed
+     */
     public static boolean print(String t){
         System.out.println(t);
         return true;
     }
+    /**
+     * It prints an empty space
+     * @return true indicating it was printed
+     */
     public static boolean printSpace(){
         System.out.println("");
         return true;

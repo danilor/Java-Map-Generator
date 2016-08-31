@@ -1,3 +1,8 @@
+/**
+ *   This is the main MAP class and object.
+ *   @author  Danilo Ramírez
+ *   @version  1.0
+ * */
 package com.daniloramirezcr.mapgenerator;
 
 import com.daniloramirezcr.RandomString;
@@ -7,11 +12,7 @@ import java.text.SimpleDateFormat; //Only for the simple date format
 import java.util.*;
 // The following two imports are for the array list functionality
 
-/*
-*   This is the main MAP class and object.
-*   @author  Danilo Ramírez
-*   @version  1
-* */
+
 public class Map {
 
     private int width = 20;
@@ -42,7 +43,7 @@ public class Map {
 
     /**
      * This function will return true when the map is full.
-     * @return
+     * @return boolean It returns true if the map is full
      */
     public boolean mapIsFull(){
         this.mes("Calculating if the map is filled");
@@ -84,7 +85,6 @@ public class Map {
     /**
      *  Set the width
      * @param  w The width of the map
-     * @return Nothing
      */
     public void setWidth(int w){  this.mes("Setting up the width to: " + Integer.toString(w) );   this.width = w; }
     /**
@@ -96,7 +96,6 @@ public class Map {
     /**
      *  Set the height
      * @param  h The height of the map
-     * @return Nothing
      */
     public void setHeight(int h){  this.mes("Setting up the height to: " + Integer.toString(h) );  this.height = h; }
     /**
@@ -123,13 +122,14 @@ public class Map {
 
     /**
      * This function will set up the messages functionality of this class
+     * @param b The option to set the messages system true or false
      */
     public void setMessagesBool(boolean b){
         this.sendMessagesToConsole = b;
     }
-
     /**
      * This function will automatically set the messages to true
+     * @return Map It returns the map itself for chained commands
      */
     public Map enableMessages(){
         this.setMessagesBool(true);
@@ -452,7 +452,7 @@ public class Map {
 
     /**
      * This function will generate a new seed at any place of the map. This function find a location and send it to other function.
-     * @param randomElement
+     * @param randomElement This is the random element selected
      */
     private void generateNewRandomSeed(MapElement randomElement){
         this.mes("Searching for place to generate a random seed");
